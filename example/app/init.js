@@ -4,6 +4,5 @@ var init = function() {
   login.render();
 }
 if (typeof exConfig !== 'undefined') {
-  console.log('init app');
   if (exConfig.init === 'app') init();
 }

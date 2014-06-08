@@ -2,22 +2,27 @@
 var path = require('path');
 var fs = require('fs');
 var docopt = require('docopt').docopt;
-var build = require('../lib/build');
+var builder = require('../lib/builder');
 var package = require('../package');
 
 var doc = fs.readFileSync(path.join(__dirname, 'docopt.txt'), 'utf8');
 var result = docopt(doc, {version: package.version, help: true});
 
+var entries = result['<entry>'].map(function(s) {
+  var split = s.split('::');
+  var input = path.join(process.cwd(), split[0]);
+  var output = split[1] ? path.join(process.cwd(), split[1]) : null;
+  return [input, output];
+});
+
+var options = {
+  prefix: result['--prefix'] || '/dev',
+  rootDir: path.resolve(process.cwd(), (result['--rootDir'] || '.'))
+};
 if (result.build) {
   //console.log(result);
-  var entries = result['<entry>'].map(function(s) {
-    var split = s.split('::');
-    var input = path.join(process.cwd(), split[0]);
-    var output = split[1] ? path.join(process.cwd(), split[1]) : null;
-    return [input, output];
-  });
-  build(entries, {
-    prefix: result['--prefix'] || '/dev'
-  });
+  builder.build(entries, options);
+} else if (result.package) {
+  builder.package(entries, options);
 }
 
