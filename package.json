@@ -1,0 +1,21 @@
+{
+  "name": "bldr",
+  "version": "0.0.1",
+  "description": "bldr browser/define/require, a node/browser module builder",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "require",
+    "browserify",
+    "amd",
+    "requirejs"
+  ],
+  "author": "Wayne Larsen",
+  "license": "BSD",
+  "devDependencies": {
+    "express": "^4.4.1",
+    "underscore": "^1.6.0"
+  }
+}
