@@ -1,0 +1,12 @@
+var doc = Usage:
+  bldr build <entry>... [--prefix=<prefix>]
+  bldr package <entry>...
+
+<entry> is a source file, output file pair, separated by '::'
+  With only a signle input file, you can omit the '::', and the output
+  will be echoed to stdout.
+
+Options:
+  -h --help                      Show this help
+  -v --version                   Show version and exit
+  -p <prefix> --prefix=<prefix>  Prefix for dev loader. Default: '/dev'

@@ -3,25 +3,21 @@ var path = require('path');
 var fs = require('fs');
 var docopt = require('docopt').docopt;
 var build = require('../lib/build');
+var package = require('../package');
 
-var doc = "Usage: \n\
-  bldr build <entry> [--output=<out>] [--prefix=<prefix>]\n\
-  \n\
-Options: \n\
-  -h --help                     Show this help \n\
-  -v --version                  Show version and exit \n\
-  -o <out> --output=<out>       Write the file to this path. Default is echo to stdout. \n\
-  -p <prefix> --prefix=<prefix> Prefix the app requires. Default: '/js' \n\
-";
-
-var result = docopt(doc, {version: '0.0.1', help: true});
+var doc = fs.readFileSync(path.join(__dirname, 'docopt.txt'), 'utf8');
+var result = docopt(doc, {version: package.version, help: true});
 
 if (result.build) {
   //console.log(result);
-  var requirePath = path.join(process.cwd(),result['<entry>']);
-  build(requirePath, {
-    output: result['--output'],
-    prefix: result['--prefix'] || '/js'
+  var entries = result['<entry>'].map(function(s) {
+    var split = s.split('::');
+    var input = path.join(process.cwd(), split[0]);
+    var output = split[1] ? path.join(process.cwd(), split[1]) : null;
+    return [input, output];
+  });
+  build(entries, {
+    prefix: result['--prefix'] || '/dev'
   });
 }
 
