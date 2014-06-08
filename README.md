@@ -119,14 +119,14 @@ describe('Login View', function() {
 
 ```sh
 # We can build the dev loader shim for the browser
-$ bldr build app/index.js > www/app.js
+$ bldr build app::www/app.js
 # Or package our app for procuction
-$ bldr package app/index.js --output www/app.js
+$ bldr package app::www/app.js
 ```
 
 ```sh
 # We can also package the app into multiple files
-$ bldr [--package] -i1 app/index -i2 app/admin/index -o2 www/app.js -o2 www/admin.js
+$ bldr package app::www/app.js app/admin::www/admin.js
 ```
 
 ### FAQ:

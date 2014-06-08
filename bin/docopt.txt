@@ -1,6 +1,6 @@
 var doc = Usage:
-  bldr build <entry>... [--prefix=<prefix>] [--rootDir=<rootDir>]
-  bldr package <entry>... [--rootDir=<rootDir>]
+  bldr build <entry>... [--prefix=<prefix>] [--rootDir=<rootDir>] [--deps=<deps>]
+  bldr package <entry>... [--rootDir=<rootDir>] [--deps=<deps>]
 
 <entry> is a source file, output file pair, separated by '::'
   With only a signle input file, you can omit the '::', and the output
@@ -11,3 +11,4 @@ Options:
   -v --version                      Show version and exit
   -p <prefix> --prefix=<prefix>     Prefix for dev loader. Default: '/dev'
   -r <rootDir> --rootDir=<rootDir>  Root dir for server. Default: 'CWD'
+  --deps=<deps>                     Generate a deps file.

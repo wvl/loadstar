@@ -15,6 +15,8 @@ var entries = result['<entry>'].map(function(s) {
   return [input, output];
 });
 
+var deps = result['--deps'];
+
 var options = {
   prefix: result['--prefix'] || '/dev',
   rootDir: path.resolve(process.cwd(), (result['--rootDir'] || '.'))
@@ -22,7 +24,9 @@ var options = {
 if (result.build) {
   //console.log(result);
   builder.build(entries, options);
+  if (deps) builder.deps(deps);
 } else if (result.package) {
   builder.package(entries, options);
+  if (deps) builder.deps(deps);
 }
 
