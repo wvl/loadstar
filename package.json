@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "express": "^4.4.1",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "ejs": "^1.0.0"
   }
 }

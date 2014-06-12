@@ -8,10 +8,11 @@
   </div>
   <ul>
     <li><a href="/">App</a></li>
-    <li><a href="/admin.html">Admin</a></li>
+    <li><a href="/admin">Admin</a></li>
   </ul>
-  <script>var exConfig = {init: 'app'};</script>
-  <script src="/js/deps.js"></script>
-  <script src="/js/app.js"></script>
+  <script>var exConfig = <%- exConfig %>;</script>
+  <% sources.forEach(function(source) { %>
+  <script src="/js/<%= source %>.js"></script>
+  <% }); %>
 </body>
 </html>
