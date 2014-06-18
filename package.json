@@ -15,7 +15,8 @@
   "author": "Wayne Larsen",
   "license": "BSD",
   "dependencies": {
-    "docopt": "~0.4.0"
+    "docopt": "~0.4.0",
+    "minimatch": "^0.3.0"
   },
   "devDependencies": {
     "express": "^4.4.1",
