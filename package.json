@@ -19,7 +19,7 @@
     "requirejs"
   ],
   "author": "Wayne Larsen <wayne@larsen.st>",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
     "docopt": "~0.4.0",
     "minimatch": "^0.3.0"
