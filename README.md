@@ -1,5 +1,5 @@
-bldr - a module loader for node.js and the browser
-==================================================
+bldr - a module builder for node.js and the browser
+===================================================
 
 1. You want to share code between node.js and the browser
 2. You do not want a build step between saving a file and running the code (in the browser, or on node).
@@ -16,9 +16,9 @@ you bldr will package your code for into one or more files.
 
 It has the following api:
 
-b. **bldr.browser**: Add this file to the list for the browser.
-d. **bldr.define**: Define this file into your app's namespace for both node and the browser.
-r. **bldr.require**: Require this file for both node and the browser.
+1. **bldr.require**: Require this file for both node and the browser.
+2. **bldr.define**: Define this file into your app's namespace for both node and the browser.
+3. **bldr.browser**: Add this file to the list for the browser.
 
 ### Example
 
@@ -116,6 +116,7 @@ describe('Login View', function() {
     expect(myapp.views.Login).to.exist;
   });
 });
+```
 
 ```sh
 # We can build the dev loader shim for the browser
@@ -139,4 +140,17 @@ No require shim in the compiled file. lightest weight, simplest result.
 
 The shim file implements a loader for dev purposes. In production you control your own loading.
 
-**--watch?**
+**How do I split my app into multiple files**
+
+The command line tool takes a list of 'require path'::'file to write'. It will go through the list in order, and first require the path, and then write out the state of the app (either into a shim loader with `build`, or a concatenated file with `package`). The next file to be required will only add any files that were not in the first package. In that way you can split the app however you want.
+
+Say for example you wanted to have most of the dependencies in one file, and the app in another. You could have a `lib/deps.js` file that would contain `bldr.browser('path/to/underscore.js'); bldr.browser('path/to/backbone.js');`. `lib/index.js` would then contain `require('./deps.js'); bldr.define('models');`. Then the following command would put everything required by deps.js into the first file, and everything else into the second.
+
+```sh
+bldr build lib/deps::www/js/deps.js lib::www/js/app.js
+```
+
+**Is there a watch mode?**
+
+I believe that this functionality is out of the scope of this package, and should be built into your build tools. You can see an example of `bldr` integrated with `make` in the examples directly. There is support for generating a depenency file that `make` will understand with the option `--deps`. More build tool integration hopefully coming.
+
