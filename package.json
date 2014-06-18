@@ -3,8 +3,14 @@
   "version": "0.0.1",
   "description": "bldr browser/define/require, a node/browser module builder",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wvl/bldr.git"
+  },
+  "homepage": "https://github.com/wvl/bldr",
+  "bugs": {"url": "https://github.com/wvl/bldr/issues" },
   "scripts": {
-    "test": "npm test"
+    "test": "mocha test"
   },
   "keywords": [
     "require",
@@ -12,7 +18,7 @@
     "amd",
     "requirejs"
   ],
-  "author": "Wayne Larsen",
+  "author": "Wayne Larsen <wayne@larsen.st>",
   "license": "BSD",
   "dependencies": {
     "docopt": "~0.4.0",
