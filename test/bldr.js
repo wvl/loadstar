@@ -12,7 +12,8 @@ describe('bldr', function() {
   });
 
   it('should add to the buildList', function() {
-    expect(b.buildList).to.eql([__filename]);
+    expect(Object.keys(b.buildList).length).to.equal(1);
+    expect(b.buildList[__filename]).to.equal(true);
   });
 
   it('should require and add to the applist', function() {
