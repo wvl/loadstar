@@ -11,6 +11,14 @@ describe('bldr', function() {
     bldr = b(__filename, {global: 'testbldr'});
   });
 
+  afterEach(function() {
+    Object.keys(require.cache).forEach(function(reqd) {
+      if (path.relative(path.join(__dirname, 'fixtures'), reqd).slice(0,2) != '..') {
+        delete require.cache[reqd];
+      }
+    });
+  });
+
   it('should add to the buildList', function() {
     expect(Object.keys(b.buildList).length).to.equal(1);
     expect(b.buildList[__filename]).to.equal(true);
@@ -21,7 +29,8 @@ describe('bldr', function() {
     expect(mod.msg).to.exist;
     expect(b.appList.length).to.equal(1);
     expect(b.appList[0][0]).to.equal(path.join(__dirname, 'fixtures/exports.js'));
-    expect(b.appList[0][1]).to.not.exist;
+    expect(b.appList[0][1]).to.be.false;
+    expect(b.info.usedDefine).to.be.false;
   });
 
   it('should add to the global with define', function() {
@@ -31,6 +40,7 @@ describe('bldr', function() {
     expect(b.appList.length).to.equal(1);
     expect(b.appList[0][0]).to.equal(path.join(__dirname, 'fixtures/exports.js'));
     expect(b.appList[0][1]).to.eql(['testbldr','fixtures','exports']);
+    expect(b.info.usedDefine).to.equal(true);
   });
 
   it('should add to the global with define and a given extension', function() {
@@ -80,5 +90,23 @@ describe('bldr', function() {
     expect(b.appList.length).to.equal(2);
     expect(b.appList[0][0]).to.match(/exportmore/);
     expect(b.appList[1][0]).to.match(/exports/);
+  });
+
+  it('should work with recursive requires', function() {
+    var a = bldr.require('./fixtures/a.js');
+    expect(a.msg).to.equal('a');
+    expect(a.b).to.eql({msg: 'b'});
+    expect(b.appList.length).to.equal(2);
+    expect(b.appList[0][0]).to.match(/b/);
+    expect(b.appList[1][0]).to.match(/a/);
+  });
+
+  it('should work with recursive requires inverse', function() {
+    var bf = bldr.require('./fixtures/b.js');
+    expect(bf.msg).to.equal('b');
+    //expect(b.a).to.eql({msg: 'a'});
+    expect(b.appList.length).to.equal(2);
+    expect(b.appList[0][0]).to.match(/b/);
+    expect(b.appList[1][0]).to.match(/a/);
   });
 });
