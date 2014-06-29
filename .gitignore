@@ -1,3 +1,4 @@
 example/www/js
 *.d
 node_modules
+test/generated
