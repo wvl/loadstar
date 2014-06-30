@@ -1,4 +1,4 @@
-;(function(root,factory) { if (typeof define === "function" && define.amd) {   define([], factory); } else { root.testglobal = factory(); }})(this, function() {
+(function(root,factory) { if (typeof define === "function" && define.amd) {   define([], factory); } else { root.testglobal = factory(); }})(this, function() {
 var exports, module;
 
 exports = {}; module = {exports: exports};
@@ -12,4 +12,4 @@ testglobal.msg = function() {
 };
 
 return testglobal;
-}));
+});

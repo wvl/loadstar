@@ -23,7 +23,8 @@ var options = {
   prefix: result['--prefix'] || '/dev',
   rootDir: path.resolve(process.cwd(), (result['--rootDir'] || '.')),
   one: entries.length === 1,
-  dev: result.build
+  dev: result.build,
+  amd: result['--amd']
 };
 
 entries.forEach(function(entry) {

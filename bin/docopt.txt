@@ -1,6 +1,6 @@
 var doc = Usage:
   bldr build <key> <entry>... [--prefix=<prefix>] [--rootDir=<rootDir>] [--deps=<deps>]
-  bldr package <key> <entry>... [--rootDir=<rootDir>] [--deps=<deps>]
+  bldr package <key> <entry>... [--rootDir=<rootDir>] [--deps=<deps>] [--amd=<amd>]
 
 <entry> is a source file, output file pair, separated by '::'
   With only a signle input file, you can omit the '::', and the output
@@ -12,3 +12,4 @@ Options:
   -p <prefix> --prefix=<prefix>     Prefix for dev loader. Default: '/dev'
   -r <rootDir> --rootDir=<rootDir>  Root dir for server. Default: 'CWD'
   --deps=<deps>                     Generate a deps file.
+  --amd=<amd>                       Wrap in AMD capable block, export global
