@@ -2,12 +2,15 @@
 var path = require('path');
 var fs = require('fs');
 var docopt = require('docopt').docopt;
+var bldr = require('../lib');
 var builder = require('../lib/builder');
 var package = require('../package');
 
 var doc = fs.readFileSync(path.join(__dirname, 'docopt.txt'), 'utf8');
 var result = docopt(doc, {version: package.version, help: true});
 var deps = {};
+
+var key = result['<key>'];
 
 var entries = result['<entry>'].map(function(s) {
   var split = s.split('::');
@@ -30,7 +33,10 @@ entries.forEach(function(entry) {
   require(inputFile);
   if (!options.one && !outputFile) return;
 
-  var result = builder.make(options);
+  var data = bldr.store[key];
+  if (!data) throw new Error('No key matching: '+key);
+
+  var result = builder.make(data, options);
   if (outputFile) {
     fs.writeFileSync(outputFile, result, 'utf8');
     console.log('bldr: ', path.relative(process.cwd(), outputFile));
@@ -39,7 +45,7 @@ entries.forEach(function(entry) {
   }
 
   if (outputFile) {
-    var depsList = [].concat(Object.keys(bldr.buildList));
+    var depsList = [].concat(Object.keys(data.buildList));
     deps[path.relative(options.rootDir,outputFile)] = depsList;
   }
 });
