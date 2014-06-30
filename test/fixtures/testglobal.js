@@ -1,1 +1,1 @@
-var base = module.exports = {};
+var testglobal = module.exports = {};

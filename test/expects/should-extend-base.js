@@ -1,16 +1,14 @@
 ;(function() {
-var exports, module
+var exports, module;
 
 exports = {}; module = {exports: exports};
 
 // fixtures/testglobal.js
-var base = module.exports = {};
+var testglobal = module.exports = {};
 
 // fixtures/extends.js
 
 testglobal.msg = function() {
 };
-
-exports = null; module = null
 
 })()

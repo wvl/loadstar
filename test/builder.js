@@ -49,4 +49,15 @@ describe('bldr builder', function() {
     options.amd = 'testglobal';
     checkResult(this.test, builder.make(data, options));
   });
+
+  it('should use the bldr shim if define is used', function() {
+    var mode = bldr.define('./fixtures/exports');
+    checkResult(this.test, builder.make(data, options));
+  });
+
+  it('should build the dev shim', function() {
+    var mod = bldr.define('./fixtures/exports');
+    options.dev = true;
+    checkResult(this.test, builder.make(data, options));
+  });
 });
