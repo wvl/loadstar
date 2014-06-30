@@ -1,4 +1,4 @@
-var bldr = require('../..')(__filename, {global: 'ex', appDir: __dirname, rootDir: '..'});
+var bldr = require('../..')('ex', __filename, {appDir: __dirname});
 
 require('./_deps');
 require('./models');

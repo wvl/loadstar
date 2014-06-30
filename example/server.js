@@ -5,7 +5,6 @@ var ejs = require('ejs');
 var server = module.exports = express();
 server.use(express.static(__dirname + '/www'));
 var app = require('./app');
-var bldr = require('..');
 
 var user = new ex.models.User({name: 'bldr'});
 var dev = process.env.NODE_ENV !== 'production';

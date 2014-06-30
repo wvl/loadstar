@@ -1,2 +1,2 @@
-var bldr = require('../../..')(__filename, {appDir: '..', global: 'ex'});
+var bldr = require('../../..')('ex', __filename, {appDir: '..'});
 bldr.define('./User');
