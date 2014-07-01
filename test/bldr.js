@@ -28,9 +28,8 @@ describe('bldr', function() {
   it('should require and add to the applist', function() {
     var mod = bldr.require('./fixtures/exports');
     expect(mod.msg).to.exist;
-    expect(data.appList.length).to.equal(1);
-    expect(data.appList[0][0]).to.equal(path.join(__dirname, 'fixtures/exports.js'));
-    expect(data.appList[0][1]).to.be.false;
+    expect(Object.keys(data.appList).length).to.equal(1);
+    expect(data.appList[path.join(__dirname, 'fixtures/exports.js')]).to.be.false;
     expect(data.usedDefine).to.be.false;
   });
 
@@ -38,9 +37,9 @@ describe('bldr', function() {
     var mod = bldr.define('./fixtures/exports');
     expect(mod.msg).to.exist;
     expect(testbldr.fixtures.exports.msg).to.exist;
-    expect(data.appList.length).to.equal(1);
-    expect(data.appList[0][0]).to.equal(path.join(__dirname, 'fixtures/exports.js'));
-    expect(data.appList[0][1]).to.eql(['testbldr','fixtures','exports']);
+    expect(Object.keys(data.appList).length).to.equal(1);
+    var info = data.appList[path.join(__dirname, 'fixtures/exports.js')];
+    expect(info).to.eql(['testbldr','fixtures','exports']);
     expect(data.usedDefine).to.equal(true);
   });
 
@@ -52,9 +51,9 @@ describe('bldr', function() {
 
   it('should add to the appList with browser', function() {
     bldr.browser('./fixtures/browser');
-    expect(data.appList.length).to.equal(1);
-    expect(data.appList[0][0]).to.equal(path.join(__dirname, 'fixtures/browser.js'));
-    expect(data.appList[0][1]).to.not.exist;
+    expect(Object.keys(data.appList).length).to.equal(1);
+    var info = data.appList[path.join(__dirname, 'fixtures/browser.js')];
+    expect(info).to.be.null;
   });
 
   it('should require globbed files', function() {
@@ -68,46 +67,50 @@ describe('bldr', function() {
     bldr.define('./fixtures/export*.js');
     expect(testbldr.fixtures.exports.msg).to.exist;
     expect(testbldr.fixtures.exportmore.msg).to.exist;
-    expect(data.appList.length).to.equal(2);
+    expect(Object.keys(data.appList).length).to.equal(2);
   });
 
   it('should add only one copy to appList', function() {
     var mod = bldr.define('./fixtures/exports.js');
     var mod = bldr.define('./fixtures/exports.js');
-    expect(data.appList.length).to.equal(1);
+    expect(Object.keys(data.appList).length).to.equal(1);
   });
 
   it('should order the list by specifying exact files before glob', function() {
     bldr.define('./fixtures/exports.js');
     bldr.define('./fixtures/export*.js');
-    expect(data.appList.length).to.equal(2);
-    expect(data.appList[0][0]).to.match(/exports/);
-    expect(data.appList[1][0]).to.match(/exportmore/);
+    var keys = Object.keys(data.appList);
+    expect(keys.length).to.equal(2);
+    expect(keys[0]).to.match(/exports/);
+    expect(keys[1]).to.match(/exportmore/);
   });
 
   it('should order the list by specifying exact files before glob 2', function() {
     bldr.define('./fixtures/exportmore.js');
     bldr.define('./fixtures/export*.js');
-    expect(data.appList.length).to.equal(2);
-    expect(data.appList[0][0]).to.match(/exportmore/);
-    expect(data.appList[1][0]).to.match(/exports/);
+    var keys = Object.keys(data.appList);
+    expect(keys.length).to.equal(2);
+    expect(keys[0]).to.match(/exportmore/);
+    expect(keys[1]).to.match(/exports/);
   });
 
   it('should work with recursive requires', function() {
     var a = bldr.require('./fixtures/a.js');
     expect(a.msg).to.equal('a');
     expect(a.b).to.eql({msg: 'b'});
-    expect(data.appList.length).to.equal(2);
-    expect(data.appList[0][0]).to.match(/b/);
-    expect(data.appList[1][0]).to.match(/a/);
+    var keys = Object.keys(data.appList);
+    expect(keys.length).to.equal(2);
+    expect(keys[0]).to.match(/b/);
+    expect(keys[1]).to.match(/a/);
   });
 
   it('should work with recursive requires inverse', function() {
     var bf = bldr.require('./fixtures/b.js');
     expect(bf.msg).to.equal('b');
     //expect(data.a).to.eql({msg: 'a'});
-    expect(data.appList.length).to.equal(2);
-    expect(data.appList[0][0]).to.match(/b/);
-    expect(data.appList[1][0]).to.match(/a/);
+    var keys = Object.keys(data.appList);
+    expect(keys.length).to.equal(2);
+    expect(keys[0]).to.match(/b/);
+    expect(keys[1]).to.match(/a/);
   });
 });
