@@ -42,7 +42,7 @@ entries.forEach(function(entry) {
     fs.writeFileSync(outputFile, result, 'utf8');
     console.log('bldr: ', path.relative(process.cwd(), outputFile));
   } else {
-    console.log(output);
+    console.log(result);
   }
 
   if (outputFile) {
