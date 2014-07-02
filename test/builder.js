@@ -60,4 +60,12 @@ describe('bldr builder', function() {
     options.dev = true;
     checkResult(this.test, builder.make(data, options));
   });
+
+  it('should call a transform', function() {
+    bldr.setTransform('mytransform', function(src, info) {
+      return src.replace(/msg/g, 'mymsg');
+    });
+    var mod = bldr.require('./fixtures/extends', {transform: 'mytransform'});
+    checkResult(this.test, builder.make(data, options));
+  });
 });
