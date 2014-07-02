@@ -7,13 +7,13 @@ var bldr = function(ss) {
   }
   r[ss[ss.length - 1]] = module.exports;
 };
-var loadScript = function(src, segments, next) {
+var loadScript = function(src, info, next) {
   var script = document.createElement('script');
   script.src = src;
   script.async = false;
 
   script.onload = function() {
-    if (segments) bldr(segments);
+    if (info.segments) bldr(info.segments);
     if (next) {
       exports = {}; module = {exports: exports};
     } else {
@@ -36,6 +36,6 @@ require = function() {
 
 
 exports = {}; module = {exports: exports};
-loadScript('fixtures/exports.js', ["testbldr","fixtures","exports"], undefined);
+loadScript('fixtures/exports.js', {"define":true,"segments":["testbldr","fixtures","exports"]}, undefined);
 
 })()
