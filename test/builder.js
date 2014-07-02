@@ -68,4 +68,18 @@ describe('bldr builder', function() {
     var mod = bldr.require('./fixtures/extends', {transform: 'mytransform'});
     checkResult(this.test, builder.make(data, options));
   });
+
+  it('should add files to dev shim only if {dev: true}', function() {
+    var mod = bldr.require('./fixtures/extends', {dev: true});
+    expect(builder.make(data, options)).to.not.match(/msg/);
+    options.dev = true;
+    expect(builder.make(data, options)).to.match(/extends\.js/);
+  });
+
+  it('should add files to production only if {dev: false}', function() {
+    var mod = bldr.require('./fixtures/extends', {dev: false});
+    expect(builder.make(data, options)).to.match(/msg/);
+    options.dev = true;
+    expect(builder.make(data, options)).to.not.match(/extends\.js/);
+  });
 });
