@@ -29,7 +29,7 @@ describe('bldr', function() {
     var mod = bldr.require('./fixtures/exports');
     expect(mod.msg).to.exist;
     expect(Object.keys(data.appList).length).to.equal(1);
-    expect(data.appList[path.join(__dirname, 'fixtures/exports.js')]).to.be.false;
+    expect(data.appList[path.join(__dirname, 'fixtures/exports.js')].segments).to.be.false;
     expect(data.usedDefine).to.be.false;
   });
 
@@ -39,7 +39,7 @@ describe('bldr', function() {
     expect(testbldr.fixtures.exports.msg).to.exist;
     expect(Object.keys(data.appList).length).to.equal(1);
     var info = data.appList[path.join(__dirname, 'fixtures/exports.js')];
-    expect(info).to.eql(['testbldr','fixtures','exports']);
+    expect(info.segments).to.eql(['testbldr','fixtures','exports']);
     expect(data.usedDefine).to.equal(true);
   });
 
@@ -53,7 +53,7 @@ describe('bldr', function() {
     bldr.browser('./fixtures/browser');
     expect(Object.keys(data.appList).length).to.equal(1);
     var info = data.appList[path.join(__dirname, 'fixtures/browser.js')];
-    expect(info).to.be.null;
+    expect(info.segments).to.be.undefined;
   });
 
   it('should require globbed files', function() {
