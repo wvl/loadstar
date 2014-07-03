@@ -30,7 +30,6 @@ describe('bldr', function() {
     expect(mod.msg).to.exist;
     expect(Object.keys(data.appList).length).to.equal(1);
     expect(data.appList[path.join(__dirname, 'fixtures/exports.js')].segments).to.be.false;
-    expect(data.usedDefine).to.be.false;
   });
 
   it('should add to the global with define', function() {
@@ -40,7 +39,6 @@ describe('bldr', function() {
     expect(Object.keys(data.appList).length).to.equal(1);
     var info = data.appList[path.join(__dirname, 'fixtures/exports.js')];
     expect(info.segments).to.eql(['testbldr','fixtures','exports']);
-    expect(data.usedDefine).to.equal(true);
   });
 
   it('should add to the global with define and a given extension', function() {
