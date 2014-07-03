@@ -1,6 +1,6 @@
 {
   "name": "bldr",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "bldr browser/define/require, a node/browser module builder",
   "main": "lib/index.js",
   "repository": {
