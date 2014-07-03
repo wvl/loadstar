@@ -1,7 +1,7 @@
 ;(function() {
 
 // exports.js
-var testbldr = {};
+testbldr = {};
 testbldr.exports = {};
 testbldr.exports.msg = function() {
 };

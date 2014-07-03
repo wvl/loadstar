@@ -35,7 +35,7 @@ describe('bldr', function() {
   it('should add to the global with define', function() {
     var mod = bldr.define('./fixtures/exports');
     expect(mod.msg).to.exist;
-    expect(testbldr.fixtures.exports.msg).to.exist;
+    expect(bldr.testbldr.fixtures.exports.msg).to.exist;
     expect(Object.keys(data.appList).length).to.equal(1);
     var info = data.appList[path.join(__dirname, 'fixtures/exports.js')];
     expect(info.segments).to.eql(['testbldr','fixtures','exports']);
@@ -44,7 +44,7 @@ describe('bldr', function() {
   it('should add to the global with define and a given extension', function() {
     var mod = bldr.define('./fixtures/exports.js');
     expect(mod.msg).to.exist;
-    expect(testbldr.fixtures.exports.msg).to.exist;
+    expect(bldr.testbldr.fixtures.exports.msg).to.exist;
   });
 
   it('should add to the appList with browser', function() {
@@ -63,8 +63,8 @@ describe('bldr', function() {
 
   it('should define globbed files', function() {
     bldr.define('./fixtures/export*.js');
-    expect(testbldr.fixtures.exports.msg).to.exist;
-    expect(testbldr.fixtures.exportmore.msg).to.exist;
+    expect(bldr.testbldr.fixtures.exports.msg).to.exist;
+    expect(bldr.testbldr.fixtures.exportmore.msg).to.exist;
     expect(Object.keys(data.appList).length).to.equal(2);
   });
 

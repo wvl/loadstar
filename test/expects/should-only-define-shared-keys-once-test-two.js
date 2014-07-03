@@ -1,7 +1,7 @@
 ;(function() {
 
 // exportmore.js
-var testbldr = {};
+testbldr = {};
 testbldr.fixtures = {};
 testbldr.fixtures.exportmore = {
   msg: function() {

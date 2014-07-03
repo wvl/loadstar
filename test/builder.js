@@ -19,7 +19,6 @@ describe('bldr builder', function() {
 
   beforeEach(function() {
     delete b.store['testbldr'];
-    testbldr = undefined;
     options = {rootDir: path.join(__dirname, 'fixtures')};
     bldr = b('testbldr', __filename, {appDir: path.join(__dirname, 'fixtures')});
     data = b.store['testbldr'];
@@ -53,6 +52,7 @@ describe('bldr builder', function() {
   it('should replace module.exports if define is used', function() {
     var mode = bldr.define('./fixtures/exports');
     checkResult(this.test, builder.make(data, options));
+    expect(typeof testglobal).to.equal('undefined');
   });
 
   it('should build the dev shim', function() {
