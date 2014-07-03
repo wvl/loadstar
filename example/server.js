@@ -4,15 +4,15 @@ var express = require('express');
 var ejs = require('ejs');
 var server = module.exports = express();
 server.use(express.static(__dirname + '/www'));
-var app = require('./app');
+var ex = require('./app');
+var bldr = require('..')('ex', __filename);
 
 var user = new ex.models.User({name: 'bldr'});
 var dev = process.env.NODE_ENV !== 'production';
 console.log(user.say('Hi Node!'), dev);
 
 if (dev) {
-  // Add this route in dev mode, to serve content from your dev directory
-  server.use('/dev', express.static(__dirname));
+  bldr.installExpress(server, {rootDir: __dirname});
 }
 
 server.get('/', function(req, res) {
