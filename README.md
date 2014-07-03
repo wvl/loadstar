@@ -10,9 +10,9 @@ bldr - a module builder for node.js and the browser
 well from node.js. It does not try to infer your intentions from your require statements, but it adds
 an api on top of require so that your intentions are made explicit.
 
-With bldr, the code you write runs directly from node. In the browser, the code you write runs directly
-in the browser, by referencing the loader script that bldr creates from your source tree. And in production,
-you bldr will package your code for into one or more files.
+With bldr, the code you write runs directly from node. In the browser during development, the code runs
+through a simple transform (available as an express route handler). In the browser for production,
+bldr will package your code into one or more files.
 
 It has the following api:
 
@@ -33,19 +33,15 @@ app/views/Login.js
 ```javascript
 // app/index.js:
 
-// Require bldr. bldr is a function that takes the filename you are calling
-// from as the first argument, and an optional options argument. If you use
-// `bldr.define`, you must tell it the appDir (root of your app source tree), 
-// and an optional global variable to hang your app source off of.
-var bldr = require('bldr')(__filename, {global: 'myapp', appDir: '.'});
+// Require bldr. bldr is a function that takes the label of the app you are building as
+// the first argument, and the filename you are calling from as the second, argument,
+// and an optional options argument. If you use `bldr.define`, you must tell it the appDir
+// (root of your app source tree).
+var bldr = require('bldr')('myapp', __filename, {appDir: '.'});
 
-// browser adds the file to the package solely for the browser.
+// browser adds the file to the package solely for the browser. Note that if you use an
+// absolute path, it will base the root at your package's root.
 bldr.browser('/node_modules/underscore/underscore.js');
-
-// One requirement of bldr is that we don't use `require` from within any of the
-// app source files. So we must also require underscore and attach it to a global
-// variable, for use within our app.
-global._ = require('underscore');
 
 // `bldr.define` will require the file, and extend our global variable. After
 // this call, `myapp.models.User` will be defined.
@@ -63,18 +59,22 @@ bldr.browser('./browser.init');
 
 ```javascript
 // lib/models/User.js
-// Regular commonjs exports style. Any external dependencies must be required
-// from a file that's not added to the app (typically index.js).
+// Regular commonjs exports style.
 module.exports = function() {};
 ```
 
 ```javascript
 // lib/views/index.js
-var bldr = require('bldr')(__filename, {global: 'myapp', appDir: '..'});
+var bldr = require('bldr')('myapp', __filename, {appDir: '..'});
 
 // Add some dependencies required for the view layer
 global.React = require('react');
 bldr.browser('/vendor/js/react.js');
+
+// We could do the above without a global by requiring react in
+// every view that needs it. The bldr comment is added so that
+// the line gets removed in the browser.
+var React = require('react'); // bldr
 
 // Require our view components here
 bldr.define('./Login');
@@ -118,16 +118,22 @@ describe('Login View', function() {
 });
 ```
 
+```javascript
+// In development, we can install an express handler to serve 
+// up our individual files for the browser.
+if (process.env.NODE_ENV !== 'production') {
+  bldr.installExpress(server, {rootDir: __dirname, app: '/js/app.js'});
+}
+```
+
 ```sh
-# We can build the dev loader shim for the browser
-$ bldr build app::www/app.js
-# Or package our app for procuction
-$ bldr package app::www/app.js
+# We can then package the app for procuction
+$ bldr package myapp app::www/app.js
 ```
 
 ```sh
 # We can also package the app into multiple files
-$ bldr package app::www/app.js app/admin::www/admin.js
+$ bldr package myapp app::www/app.js app/admin::www/admin.js
 ```
 
 ### FAQ:
@@ -147,10 +153,12 @@ The command line tool takes a list of 'require path'::'file to write'. It will g
 Say for example you wanted to have most of the dependencies in one file, and the app in another. You could have a `lib/deps.js` file that would contain `bldr.browser('path/to/underscore.js'); bldr.browser('path/to/backbone.js');`. `lib/index.js` would then contain `require('./deps.js'); bldr.define('models');`. Then the following command would put everything required by deps.js into the first file, and everything else into the second.
 
 ```sh
-bldr build lib/deps::www/js/deps.js lib::www/js/app.js
+bldr package myapp lib/deps::www/js/deps.js lib::www/js/app.js
 ```
 
 **Is there a watch mode?**
 
-I believe that this functionality is out of the scope of this package, and should be built into your build tools. You can see an example of `bldr` integrated with `make` in the examples directly. There is support for generating a depenency file that `make` will understand with the option `--deps`. More build tool integration hopefully coming.
+With the express module, the newest version the files will be served up during development.
+
+There is support for generating a depenency file that `make` will understand with the option `--deps`. More build tool integration hopefully coming.
 
