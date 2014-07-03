@@ -49,6 +49,12 @@ describe('bldr builder', function() {
     checkResult(this.test, builder.make(data, options));
   });
 
+  it('should wrap with amd and define', function() {
+    var mod = bldr.define('./fixtures/exports');
+    options.amd = 'testglobal';
+    checkResult(this.test, builder.make(data, options));
+  });
+
   it('should replace module.exports if define is used', function() {
     var mode = bldr.define('./fixtures/exports');
     checkResult(this.test, builder.make(data, options));
