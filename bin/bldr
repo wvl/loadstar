@@ -27,6 +27,8 @@ var options = {
   amd: result['--amd']
 };
 
+var allDeps = {};
+
 entries.forEach(function(entry) {
   var inputFile = entry[0];
   var outputFile = entry[1];
@@ -46,8 +48,14 @@ entries.forEach(function(entry) {
   }
 
   if (outputFile) {
-    var depsList = [].concat(Object.keys(data.buildList));
-    deps[path.relative(options.rootDir,outputFile)] = depsList;
+    var outputDeps = deps[path.relative(options.rootDir, outputFile)] = {};
+    for (filename in data.buildList) {
+      outputDeps[filename] = true;
+    }
+    for (filename in data.appList) {
+      if (!allDeps[filename] && !options.dev) outputDeps[filename] = true;
+      allDeps[filename] = true;
+    }
   }
 });
 
@@ -55,7 +63,9 @@ var outputDepsFile = result['--deps'];
 if (outputDepsFile) {
   var output = '';
   for (key in deps) {
-    output += key + ': ' + deps[key].join(' ') + '\n';
+    output += key + ': ' + Object.keys(deps[key]).map(function(f) {
+      return builder.resolvePath(f, options.rootDir);
+    }).join(' ') + '\n';
   }
   fs.writeFileSync(outputDepsFile, output, 'utf8');
 };
