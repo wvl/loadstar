@@ -1,11 +1,8 @@
-var exports, module;
 
-exports = {}; module = {exports: exports};
+// testglobal.js
+var testglobal = {};
 
-// fixtures/testglobal.js
-var testglobal = module.exports = {};
-
-// fixtures/extends.js
+// extends.js
 
 testglobal.msg = function() {
 };

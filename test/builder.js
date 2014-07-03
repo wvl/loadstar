@@ -20,8 +20,8 @@ describe('bldr builder', function() {
   beforeEach(function() {
     delete b.store['testbldr'];
     testbldr = undefined;
-    options = {rootDir: __dirname};
-    bldr = b('testbldr', __filename);
+    options = {rootDir: path.join(__dirname, 'fixtures')};
+    bldr = b('testbldr', __filename, {appDir: path.join(__dirname, 'fixtures')});
     data = b.store['testbldr'];
   });
 
@@ -50,7 +50,7 @@ describe('bldr builder', function() {
     checkResult(this.test, builder.make(data, options));
   });
 
-  it('should use the bldr shim if define is used', function() {
+  it('should replace module.exports if define is used', function() {
     var mode = bldr.define('./fixtures/exports');
     checkResult(this.test, builder.make(data, options));
   });
@@ -81,5 +81,24 @@ describe('bldr builder', function() {
     expect(builder.make(data, options)).to.match(/msg/);
     options.dev = true;
     expect(builder.make(data, options)).to.not.match(/extends\.js/);
+  });
+
+  it('should only define shared keys once', function() {
+    var mode = bldr.define('./fixtures/exports');
+    var more = bldr.define('./fixtures/exportmore');
+    checkResult(this.test, builder.make(data, options));
+  });
+
+  it('should only define shared keys once test two', function() {
+    bldr = b('testbldr', __filename, {appDir: __dirname});
+    data = b.store['testbldr'];
+    var more = bldr.define('./fixtures/exportmore');
+    var mode = bldr.define('./fixtures/exports');
+    checkResult(this.test, builder.make(data, options));
+  });
+
+  it('should not mess with browser defines', function() {
+    bldr.browser('./fixtures/exportmore');
+    checkResult(this.test, builder.make(data, options));
   });
 });
