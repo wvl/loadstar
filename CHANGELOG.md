@@ -1,3 +1,7 @@
+## HEAD
+
+ * Rename bldr to loadstar
+
 ## 0.3.2 / 2014-07-04
 
  * Expose bldr.make as a public api

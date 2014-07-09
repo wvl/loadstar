@@ -14,14 +14,14 @@ var checkResult = function(test, result) {
   assert.equal(result, expected, 'Output is not as expected for: ', test.title);
 };
 
-describe('bldr builder', function() {
-  var bldr, options, data;
+describe('loadstar builder', function() {
+  var loadstar, options, data;
 
   beforeEach(function() {
-    delete b.store['testbldr'];
+    delete b.store['testloadstar'];
     options = {rootDir: path.join(__dirname, 'fixtures')};
-    bldr = b('testbldr', __filename, {appDir: path.join(__dirname, 'fixtures')});
-    data = b.store['testbldr'];
+    loadstar = b('testloadstar', __filename, {appDir: path.join(__dirname, 'fixtures')});
+    data = b.store['testloadstar'];
   });
 
   afterEach(function() {
@@ -33,78 +33,78 @@ describe('bldr builder', function() {
   });
 
   it('should extend base', function() {
-    var mod = bldr.require('./fixtures/extends');
+    var mod = loadstar.require('./fixtures/extends');
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should avoid closure if --bare is given', function() {
-    var mod = bldr.require('./fixtures/extends');
+    var mod = loadstar.require('./fixtures/extends');
     options.bare = true;
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should wrap with amd if --amd', function() {
-    var mod = bldr.require('./fixtures/extends');
+    var mod = loadstar.require('./fixtures/extends');
     options.amd = 'testglobal';
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should wrap with amd and define', function() {
-    var mod = bldr.define('./fixtures/exports');
+    var mod = loadstar.define('./fixtures/exports');
     options.amd = 'testglobal';
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should replace module.exports if define is used', function() {
-    var mode = bldr.define('./fixtures/exports');
+    var mode = loadstar.define('./fixtures/exports');
     checkResult(this.test, builder.make(data, options));
     expect(typeof testglobal).to.equal('undefined');
   });
 
   it('should build the dev shim', function() {
-    var mod = bldr.define('./fixtures/exports');
+    var mod = loadstar.define('./fixtures/exports');
     options.dev = true;
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should call a transform', function() {
-    bldr.setTransform('mytransform', function(src, info) {
+    loadstar.setTransform('mytransform', function(src, info) {
       return src.replace(/msg/g, 'mymsg');
     });
-    var mod = bldr.require('./fixtures/extends', {transform: 'mytransform'});
+    var mod = loadstar.require('./fixtures/extends', {transform: 'mytransform'});
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should add files to dev shim only if {dev: true}', function() {
-    var mod = bldr.require('./fixtures/extends', {dev: true});
+    var mod = loadstar.require('./fixtures/extends', {dev: true});
     expect(builder.make(data, options)).to.not.match(/msg/);
     options.dev = true;
     expect(builder.make(data, options)).to.match(/extends\.js/);
   });
 
   it('should add files to production only if {dev: false}', function() {
-    var mod = bldr.require('./fixtures/extends', {dev: false});
+    var mod = loadstar.require('./fixtures/extends', {dev: false});
     expect(builder.make(data, options)).to.match(/msg/);
     options.dev = true;
     expect(builder.make(data, options)).to.not.match(/extends\.js/);
   });
 
   it('should only define shared keys once', function() {
-    var mode = bldr.define('./fixtures/exports');
-    var more = bldr.define('./fixtures/exportmore');
+    var mode = loadstar.define('./fixtures/exports');
+    var more = loadstar.define('./fixtures/exportmore');
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should only define shared keys once test two', function() {
-    bldr = b('testbldr', __filename, {appDir: __dirname});
-    data = b.store['testbldr'];
-    var more = bldr.define('./fixtures/exportmore');
-    var mode = bldr.define('./fixtures/exports');
+    loadstar = b('testloadstar', __filename, {appDir: __dirname});
+    data = b.store['testloadstar'];
+    var more = loadstar.define('./fixtures/exportmore');
+    var mode = loadstar.define('./fixtures/exports');
     checkResult(this.test, builder.make(data, options));
   });
 
   it('should not mess with browser defines', function() {
-    bldr.browser('./fixtures/exportmore');
+    loadstar.browser('./fixtures/exportmore');
     checkResult(this.test, builder.make(data, options));
   });
 });

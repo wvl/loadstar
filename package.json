@@ -1,18 +1,18 @@
 {
-  "name": "bldr",
+  "name": "loadstar",
   "version": "0.3.2",
-  "description": "bldr browser/define/require, a node/browser module builder",
+  "description": "loadstar browser/define/require, a node/browser module loader and builder",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wvl/bldr.git"
+    "url": "https://github.com/wvl/loadstar.git"
   },
-  "homepage": "https://github.com/wvl/bldr",
-  "bugs": {"url": "https://github.com/wvl/bldr/issues" },
+  "homepage": "https://github.com/wvl/loadstar",
+  "bugs": {"url": "https://github.com/wvl/loadstar/issues" },
   "scripts": {
     "test": "mocha test"
   },
-  "bin": "./bin/bldr",
+  "bin": "./bin/loadstar",
   "keywords": [
     "require",
     "browserify",

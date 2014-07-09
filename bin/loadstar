@@ -2,7 +2,7 @@
 var path = require('path');
 var fs = require('fs');
 var docopt = require('docopt').docopt;
-var bldr = require('../lib');
+var loadstar = require('../lib');
 var builder = require('../lib/builder');
 var package = require('../package');
 
@@ -36,13 +36,13 @@ entries.forEach(function(entry) {
   require(inputFile);
   if (!options.one && !outputFile) return;
 
-  var data = bldr.store[key];
+  var data = loadstar.store[key];
   if (!data) throw new Error('No key matching: '+key);
 
   var result = builder.make(data, options);
   if (outputFile) {
     fs.writeFileSync(outputFile, result, 'utf8');
-    console.log('bldr: ', path.relative(process.cwd(), outputFile));
+    console.log('loadstar: ', path.relative(process.cwd(), outputFile));
   } else {
     console.log(result);
   }

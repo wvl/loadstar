@@ -5,14 +5,14 @@ var ejs = require('ejs');
 var server = module.exports = express();
 server.use(express.static(__dirname + '/www'));
 var ex = require('./app');
-var bldr = require('..')('ex', __filename);
+var loadstar = require('..')('ex', __filename);
 
-var user = new ex.models.User({name: 'bldr'});
+var user = new ex.models.User({name: 'loadstar'});
 var dev = process.env.NODE_ENV !== 'production';
 console.log(user.say('Hi Node!'), dev);
 
 if (dev) {
-  bldr.installExpress(server, {rootDir: __dirname});
+  loadstar.installExpress(server, {rootDir: __dirname});
 }
 
 server.get('/', function(req, res) {

@@ -1,5 +1,5 @@
-var bldr = require('../../..')('ex', __filename);
-bldr.define('../models/User');
+var loadstar = require('../../..')('ex', __filename);
+loadstar.define('../models/User');
 
 var Dashboard = module.exports = function(options) {
   this.model = options.model || new ex.models.User();

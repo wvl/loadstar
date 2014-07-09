@@ -1,3 +1,3 @@
-var bldr = require('../..')('testbldr', __filename);
-var a = bldr.require('./a');
+var loadstar = require('../..')('testloadstar', __filename);
+var a = loadstar.require('./a');
 exports.msg = 'b';

@@ -1,5 +1,5 @@
 var init = function() {
-  var user = new ex.models.User({name: 'bldr'});
+  var user = new ex.models.User({name: 'loadstar'});
   var login = new ex.views.Login({model: user, el: document.getElementById('app')});
   login.render();
 }

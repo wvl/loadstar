@@ -1,2 +1,2 @@
-var bldr = require('../../..')('ex', __filename, {appDir: '..'});
-bldr.define('./User');
+var loadstar = require('../../..')('ex', __filename, {appDir: '..'});
+loadstar.define('./User');

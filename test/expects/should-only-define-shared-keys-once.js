@@ -1,13 +1,13 @@
 ;(function() {
 
 // exports.js
-testbldr = {};
-testbldr.exports = {};
-testbldr.exports.msg = function() {
+testloadstar = {};
+testloadstar.exports = {};
+testloadstar.exports.msg = function() {
 };
 
 // exportmore.js
-testbldr.exportmore = {
+testloadstar.exportmore = {
   msg: function() {
     return 'more';
   }

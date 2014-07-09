@@ -1,4 +1,4 @@
-var bldr = require('../../..')('ex', __filename, {appDir: '..'});
+var loadstar = require('../../..')('ex', __filename, {appDir: '..'});
 require('..');
-bldr.define('./Dashboard');
-bldr.browser('./init');
+loadstar.define('./Dashboard');
+loadstar.browser('./init');

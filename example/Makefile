@@ -4,13 +4,13 @@
 -include deps.package.d
 
 www/js/app_shim.js:
-	../bin/bldr build ex app::www/js/app_shim.js --deps=app.d
+	../bin/loadstar build ex app::www/js/app_shim.js --deps=app.d
 
 www/js/admin_shim.js:
-	../bin/bldr build ex app:: app/admin::www/js/admin_shim.js --deps=admin.d
+	../bin/loadstar build ex app:: app/admin::www/js/admin_shim.js --deps=admin.d
 
 www/js/%.js:
-	../bin/bldr package ex app/_deps::www/js/deps.js app::www/js/app.js app/admin::www/js/admin.js --deps=deps.package.d
+	../bin/loadstar package ex app/_deps::www/js/deps.js app::www/js/app.js app/admin::www/js/admin.js --deps=deps.package.d
 
 TOPACKAGE = www/js/deps.js www/js/app.js www/js/admin.js
 TOBUILD = www/js/app_shim.js www/js/admin_shim.js

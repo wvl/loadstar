@@ -1,6 +1,6 @@
 var doc = Usage:
-  bldr build <key> <entry>... [--prefix=<prefix>] [--rootDir=<rootDir>] [--deps=<deps>]
-  bldr package <key> <entry>... [--rootDir=<rootDir>] [--deps=<deps>] [--amd=<amd>]
+  loadstar build <key> <entry>... [--prefix=<prefix>] [--rootDir=<rootDir>] [--deps=<deps>]
+  loadstar package <key> <entry>... [--rootDir=<rootDir>] [--deps=<deps>] [--amd=<amd>]
 
 <entry> is a source file, output file pair, separated by '::'
   With only a signle input file, you can omit the '::', and the output
