@@ -59,6 +59,17 @@ entries.forEach(function(entry) {
   }
 });
 
+var unfulfilled = [];
+for (var external in data.externalList) {
+  if (data.externalList[external].required && !data.externalList[external].file) {
+    unfulfilled.push(external);
+  }
+}
+
+if (unfulfilled.length) {
+  console.error('External, unfulfilled dependencies: ', unfulfilled);
+}
+
 var outputDepsFile = result['--deps'];
 if (outputDepsFile) {
   var output = '';

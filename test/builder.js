@@ -107,4 +107,9 @@ describe('loadstar builder', function() {
     loadstar.browser('./fixtures/exportmore');
     checkResult(this.test, builder.make(data, options));
   });
+
+  it('should work with unmet browser dependency', function() {
+    loadstar.require('node-test-module');
+    checkResult(this.test, builder.make(data, options));
+  });
 });
