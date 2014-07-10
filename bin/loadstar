@@ -29,6 +29,7 @@ var options = {
 };
 
 var allDeps = {};
+var data = loadstar.fetchData(key);
 
 entries.forEach(function(entry) {
   var inputFile = entry[0];
@@ -36,9 +37,6 @@ entries.forEach(function(entry) {
 
   require(inputFile);
   if (!options.one && !outputFile) return;
-
-  var data = loadstar.store[key];
-  if (!data) throw new Error('No key matching: '+key);
 
   var result = builder.make(data, options);
   if (outputFile) {

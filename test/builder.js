@@ -18,10 +18,10 @@ describe('loadstar builder', function() {
   var loadstar, options, data;
 
   beforeEach(function() {
-    delete b.store['testloadstar'];
+    delete b._store['testloadstar'];
     options = {rootDir: path.join(__dirname, 'fixtures')};
     loadstar = b('testloadstar', __filename, {appDir: path.join(__dirname, 'fixtures')});
-    data = b.store['testloadstar'];
+    data = b._store['testloadstar'];
   });
 
   afterEach(function() {
@@ -97,7 +97,7 @@ describe('loadstar builder', function() {
 
   it('should only define shared keys once test two', function() {
     loadstar = b('testloadstar', __filename, {appDir: __dirname});
-    data = b.store['testloadstar'];
+    data = b._store['testloadstar'];
     var more = loadstar.define('./fixtures/exportmore');
     var mode = loadstar.define('./fixtures/exports');
     checkResult(this.test, builder.make(data, options));

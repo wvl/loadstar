@@ -6,10 +6,10 @@ describe('loadstar', function() {
   var loadstar, data;
 
   beforeEach(function() {
-    delete b.store['testloadstar'];
+    delete b._store['testloadstar'];
     testloadstar = undefined;
     loadstar = b('testloadstar', __filename, {global: 'testloadstar'});
-    data = b.store['testloadstar'];
+    data = b._store['testloadstar'];
   });
 
   afterEach(function() {
