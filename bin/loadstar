@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var path = require('path');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 var docopt = require('docopt').docopt;
 var loadstar = require('../lib');
 var builder = require('../lib/builder');
@@ -41,6 +42,7 @@ entries.forEach(function(entry) {
 
   var result = builder.make(data, options);
   if (outputFile) {
+    mkdirp.sync(path.dirname(outputFile));
     fs.writeFileSync(outputFile, result, 'utf8');
     console.log('loadstar: ', path.relative(process.cwd(), outputFile));
   } else {
@@ -67,5 +69,6 @@ if (outputDepsFile) {
       return builder.resolvePath(f, options.rootDir);
     }).join(' ') + '\n';
   }
+  mkdirp.sync(path.dirname(outputDepsFile));
   fs.writeFileSync(outputDepsFile, output, 'utf8');
 };

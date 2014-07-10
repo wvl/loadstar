@@ -8,7 +8,9 @@
     "url": "https://github.com/wvl/loadstar.git"
   },
   "homepage": "https://github.com/wvl/loadstar",
-  "bugs": {"url": "https://github.com/wvl/loadstar/issues" },
+  "bugs": {
+    "url": "https://github.com/wvl/loadstar/issues"
+  },
   "scripts": {
     "test": "mocha test"
   },
@@ -23,7 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "docopt": "~0.4.0",
-    "minimatch": "^0.3.0"
+    "minimatch": "^0.3.0",
+    "mkdirp": "^0.5.0"
   },
   "devDependencies": {
     "express": "^4.4.1",
