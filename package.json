@@ -1,6 +1,6 @@
 {
   "name": "loadstar",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "loadstar browser/define/require, a node/browser module loader and builder",
   "main": "lib/index.js",
   "repository": {

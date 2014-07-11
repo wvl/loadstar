@@ -1,6 +1,9 @@
-## HEAD
+## 0.4 / 2014-07-11
 
  * Rename bldr to loadstar
+ * loadstar.require('package') will work. You can resolve these dependencies
+   at build time, by filling out the loadstar.dependencies object in your
+   package.json.
 
 ## 0.3.2 / 2014-07-04
 
