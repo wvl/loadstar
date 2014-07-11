@@ -1,3 +1,7 @@
+## 0.4.1 / 2014-07-11
+
+ * Do not modify external sources
+
 ## 0.4 / 2014-07-11
 
  * Rename bldr to loadstar
