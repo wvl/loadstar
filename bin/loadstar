@@ -60,8 +60,10 @@ entries.forEach(function(entry) {
 });
 
 var unfulfilled = [];
-for (var external in data.externalList) {
-  if (data.externalList[external].required && !data.externalList[external].file) {
+var external, externalInfo;
+for (external in data.externalList) {
+  externalInfo = data.externalList[external];
+  if (externalInfo.required && !externalInfo.file && externalInfo.file !== false) {
     unfulfilled.push(external);
   }
 }
